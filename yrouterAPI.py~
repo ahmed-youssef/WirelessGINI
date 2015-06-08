@@ -1,6 +1,3 @@
-# Author: Ahmed Youssef
-# Date: May 20 2015
-
 import os, sys, time, subprocess
 import paramiko
 
