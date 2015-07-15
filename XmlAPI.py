@@ -1,7 +1,3 @@
-# Author: Lamis Youssef
-# Date: May 20 2015
-# Modified by: Ahmed Youssef
-
 import xml.etree.ElementTree as etree
 from yrouterAPI import raw_iface, rentry
 
@@ -45,7 +41,7 @@ class XML_Yun:
 
 class XML_Top:
     def __init__(self, name):
-        self.xmlD = etree.parse(name)
+        self.xmlD = etree.fromstring(name)
         self.root = self.xmlD.getroot()
         self.Yuns = []
 
