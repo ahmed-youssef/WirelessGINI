@@ -2,6 +2,7 @@ from SimpleXMLRPCServer import SimpleXMLRPCServer
 from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
 from yrouterAPI import *
 from XmlAPI import *
+from Database import *
 
 class YunEntity:
 	def __init__(self, ID, CurrRaw, MaxRaw, Special):
@@ -63,7 +64,7 @@ class ServerAPI:
 		XML.Parse()
 
 		# Check if we have enough raw interfaces
-		Yuns = database.Check()
+		Yuns = self.Check()
 		for XML_Yun in XML.Yuns:
 			for RawIface in XML_Yun.RawIfaces:
 				for Yun in Yuns:
@@ -101,14 +102,14 @@ class ServerAPI:
 			for rawIF in Yun.RawIfaces:
 				interfaces.AddRawIface(rawIF)
 
-			run_yrouter(interfaces, Yun.ID)
+			run_yrouter(interfaces, Yun.ID, True)
 
 		return 1
 
 # Create database instance
 database = YunServerDB("YunServer.db")
 # Create XMLRPC server
-server = SimpleXMLRPCServer(("127.0.0.1", 8000),
+server = SimpleXMLRPCServer(("192.168.54.14", 8000),
                             requestHandler=RequestHandler)
 server.register_introspection_functions()
 # Register functions

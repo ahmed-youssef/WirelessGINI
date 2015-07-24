@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<All_Interfaces>
+<VN>
   <Yun>
     <ID>1</ID>
     <Interface>
@@ -164,4 +164,4 @@
       </REntry>
     </Raw_Interface>
   </Yun>
-</All_Interfaces>
+</VN>
