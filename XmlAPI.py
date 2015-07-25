@@ -49,22 +49,6 @@ class XML_Top:
             ID = int(Yun.find('ID').text)
             nYun = XML_Yun(ID)
             index = 0
-            for Interface in Yun.findall('Interface'):
-                #InterfaceNo = int(Interface.find('InterfaceNo').text)
-                InterfaceNo = index
-                index = index + 1
-                DestYunID = int(Interface.find('DestYunID').text)
-                IPAddress = Interface.find('IPAddress').text
-                HWAddress = Interface.find('HWAddress').text
-                TunIface = XML_tuniface(InterfaceNo, DestYunID, IPAddress, HWAddress)
-                for REntry in Interface.findall('REntry'):
-                    Net = REntry.find('Net').text
-                    NetMask = REntry.find('NetMask').text
-                    NextHop = REntry.find('NextHop').text
-                    route = rentry(Net, NetMask, NextHop)
-                    TunIface.AddRoute(route)
-
-                nYun.AddTunIface(TunIface)
 
             for BBInterface in Yun.findall('BBInterface'):
                 #InterfaceNo = int(BBInterface.find('InterfaceNo').text)
@@ -82,6 +66,25 @@ class XML_Top:
                     BBIface.AddRoute(route)
 
                 nYun.AddBBIface(BBIface)
+
+            for Interface in Yun.findall('Interface'):
+                #InterfaceNo = int(Interface.find('InterfaceNo').text)
+                InterfaceNo = index
+                index = index + 1
+                DestYunID = int(Interface.find('DestYunID').text)
+                IPAddress = Interface.find('IPAddress').text
+                HWAddress = Interface.find('HWAddress').text
+                TunIface = XML_tuniface(InterfaceNo, DestYunID, IPAddress, HWAddress)
+                for REntry in Interface.findall('REntry'):
+                    Net = REntry.find('Net').text
+                    NetMask = REntry.find('NetMask').text
+                    if(NetMask == None):
+                        NetMask = "255.255.255.0"
+                    NextHop = REntry.find('NextHop').text
+                    route = rentry(Net, NetMask, NextHop)
+                    TunIface.AddRoute(route)
+
+                nYun.AddTunIface(TunIface)
 
             for RawInterface in Yun.findall('Raw_Interface'):
                 #InterfaceNo = int(RawInterface.find('InterfaceNo').text)

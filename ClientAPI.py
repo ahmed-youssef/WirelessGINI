@@ -3,7 +3,7 @@ import xmlrpclib
 #TODO: Get IP address of the user machine directly, no need to pass it to the Create and Delete functions
 
 client_ip = "192.168.54.14"
-xmlfile = "test1.xml"
+xmlfile = "latency.xml"
 
 class wgini_client:
 	def __init__(self, ip, port):
@@ -23,4 +23,4 @@ client = wgini_client("192.168.54.14", "8000")
 XMLstring = open(xmlfile).read()
 status = client.Create(XMLstring, client_ip)
 
-print "status = %d" %status
+print status
