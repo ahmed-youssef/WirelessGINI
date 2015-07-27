@@ -84,13 +84,18 @@ class ServerAPI:
 			if(Yun.CurrRaw + RawIfacesLen > Yun.MaxRaw):
 				return "Create: Not enough wlan interfaces on Station %d"%Yun.ID
 
+		# Make sure the user doesn't have an existing topology deployed
+		if(database.GetTopologyID(HostIP) != None):
+			return "Create: Please delete the exising topology before creating a new one"
+
 		database.AddTopology(HostIP)
 		TopID = database.GetTopologyID(HostIP)
 
 		for Yun in XML.Yuns:
 
-			for Interface in Yun.BBIfaces:
-				database.AddInterface("BB", Interface.num, TopID, Yun.ID, Interface.DestIface)
+			# TODO Fix this: currently expects DestIface to be a key and returns an error when its zero
+			#for Interface in Yun.BBIfaces:
+			#	database.AddInterface("BB", Interface.num, TopID, Yun.ID, Interface.DestIface)
 
 			for Interface in Yun.TunIfaces:
 				database.AddInterface("tun", Interface.num, TopID, Yun.ID, Interface.DestID)

@@ -3,7 +3,7 @@
   <Yun>
     <ID>1</ID>
     <BBInterface>
-      <DestIface>1</DestIface>
+      <DestIface>0</DestIface>
       <IPAddress>192.168.1.2</IPAddress>
       <HWAddress>1a:1a:1a:1a:1a:20</HWAddress>
       <REntry>
