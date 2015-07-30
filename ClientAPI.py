@@ -21,7 +21,7 @@ class wgini_client:
 	def Delete(self, ip):
 		return self.conn.Delete(ip)
 
-client = wgini_client("192.168.54.14", "8000")
+client = wgini_client("localhost", "30000")
 
 
 #status = client.Create(XMLstring, client_ip)
