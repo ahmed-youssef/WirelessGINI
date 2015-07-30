@@ -135,7 +135,7 @@ RawTopMax = 1
 # Create database instance
 database = YunServerDB("YunServer.db")
 # Create XMLRPC server
-server = SimpleXMLRPCServer(("192.168.54.14", 8000),
+server = SimpleXMLRPCServer(("localhost", 30000),
                             requestHandler=RequestHandler)
 server.register_introspection_functions()
 # Register functions
