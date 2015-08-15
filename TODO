@@ -1,0 +1,6 @@
+Fix bug where restarting the network on the Yun causes the existing raw sockets to malfunction.
+Possible solutions:
+  rebind to raw interface when error occurs. (easier)
+  fix openwrt scripts and possibly hostapd (harder)
+
+Allow SSID to be configured by the user

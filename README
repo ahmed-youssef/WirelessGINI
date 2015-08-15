@@ -16,3 +16,23 @@ To Create a Topology:
 
 To Delete a Topology:
   status = wgini_client.Delete(ClientIP)
+
+Document Type Definition of TSF:
+
+<!DOCTYPE VN [
+  <!ELEMENT VN (Station+)>
+    <!ELEMENT Station (ID, Interface*, BHInterface?, Raw_Interface?)>
+      <!ELEMENT ID (#PCDATA)>
+      <!ELEMENT Interface (InterfaceNo, DestStaID, IPAddress, HWAddress, REntry+)>
+      <!ELEMENT BHInterface (InterfaceNo, DestIface, IPAddress, HWAddress, REntry+)>
+      <!ELEMENT WlanInterface (InterfaceNo, IPAddress, SSID, REntry+)>
+        <!ELEMENT InterfaceNo (#PCDATA)>
+        <!ELEMENT DestStaID (#PCDATA)>
+        <!ELEMENT IPAddress (#PCDATA)>
+        <!ELEMENT HWAddress (#PCDATA)>
+        <!ELEMENT DestIface (#PCDATA)>
+        <!ELEMENT REntry (Net, NetMask, NextHop?)>
+          <!ELEMENT Net (#PCDATA)>
+          <!ELEMENT NetMask (#PCDATA)>
+          <!ELEMENT NextHop (#PCDATA)>
+]>

@@ -1,5 +1,4 @@
 import os, sys, time, subprocess
-#import paramiko
 
 remote_dir = "/root/"
 local_dir = "/home/anrl/Desktop/"

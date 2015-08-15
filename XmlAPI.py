@@ -1,3 +1,5 @@
+# Functions for parsing the TSF 
+
 import xml.etree.ElementTree as etree
 from yrouterAPI import wlan_iface, rentry
 

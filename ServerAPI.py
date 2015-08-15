@@ -1,3 +1,5 @@
+#WGINI Server APIs
+
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
 from yrouterAPI import *
@@ -42,7 +44,7 @@ class WGINI_Server:
 		StationsWithWlan = self.database.GetWlanInfo()
 		Stations = []
 		for StationID in StationIDs:
-			Stations.append(StationEntity(StationID, 0, self.database.GetMaxWlan(StationID), self.database.GetSpecial(StationID)))
+			Stations.append(StationEntity(StationID, 0, self.database.GetMaxWlan(StationID), self.database.IsPortal(StationID)))
 			# Get the current number of used wlan interfaces for the last appended Station
 			for AvailStation in StationsWithWlan:
 				if(StationID == AvailStation[0]):
@@ -71,7 +73,7 @@ class WGINI_Server:
 		self.database.DeleteTopology(HostIP)
 		return "Delete: Topology %d deleted"%TopID
 
-    # Deploys Topology on Stations and Updates the database
+    # Deploys the topology on the platform and Updates the database
 	def Create(self, XMLstring, HostIP):
 
 		XML = XML_Top(XMLstring)
