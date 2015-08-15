@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as etree
-from yrouterAPI import raw_iface, rentry
+from yrouterAPI import wlan_iface, rentry
 
 class XML_tuniface:
     def __init__(self, num, DestID, vIP, vHW):
@@ -23,18 +23,18 @@ class XML_BBiface:
     def AddRoute(self, route):
         self.routes.append(route)
 
-class XML_Yun:
+class XML_Station:
     def __init__(self, ID):
         self.ID = ID
         self.TunIfaces = []
-        self.RawIfaces = []
+        self.WlanIfaces = []
         self.BBIfaces = []
 
     def AddTunIface(self, TunIface):
         self.TunIfaces.append(TunIface)
 
-    def AddRawIface(self, RawIface):
-        self.RawIfaces.append(RawIface)
+    def AddWlanIface(self, WlanIface):
+        self.WlanIfaces.append(WlanIface)
 
     def AddBBIface(self, BBIface):
         self.BBIfaces.append(BBIface)
@@ -42,15 +42,15 @@ class XML_Yun:
 class XML_Top:
     def __init__(self, name):
         self.root = etree.fromstring(name)
-        self.Yuns = []
+        self.Stations = []
 
     def Parse(self):
-        for Yun in self.root.findall('Yun'):
-            ID = int(Yun.find('ID').text)
-            nYun = XML_Yun(ID)
+        for Station in self.root.findall('Station'):
+            ID = int(Station.find('ID').text)
+            nStation = XML_Station(ID)
             index = 0
 
-            for BBInterface in Yun.findall('BBInterface'):
+            for BBInterface in Station.findall('BBInterface'):
                 #InterfaceNo = int(BBInterface.find('InterfaceNo').text)
                 InterfaceNo = index
                 index = index + 1
@@ -65,16 +65,16 @@ class XML_Top:
                     route = rentry(Net, NetMask, NextHop)
                     BBIface.AddRoute(route)
 
-                nYun.AddBBIface(BBIface)
+                nStation.AddBBIface(BBIface)
 
-            for Interface in Yun.findall('Interface'):
+            for Interface in Station.findall('Interface'):
                 #InterfaceNo = int(Interface.find('InterfaceNo').text)
                 InterfaceNo = index
                 index = index + 1
-                DestYunID = int(Interface.find('DestYunID').text)
+                DestStationID = int(Interface.find('DestStationID').text)
                 IPAddress = Interface.find('IPAddress').text
                 HWAddress = Interface.find('HWAddress').text
-                TunIface = XML_tuniface(InterfaceNo, DestYunID, IPAddress, HWAddress)
+                TunIface = XML_tuniface(InterfaceNo, DestStationID, IPAddress, HWAddress)
                 for REntry in Interface.findall('REntry'):
                     Net = REntry.find('Net').text
                     NetMask = REntry.find('NetMask').text
@@ -84,38 +84,38 @@ class XML_Top:
                     route = rentry(Net, NetMask, NextHop)
                     TunIface.AddRoute(route)
 
-                nYun.AddTunIface(TunIface)
+                nStation.AddTunIface(TunIface)
 
-            for RawInterface in Yun.findall('Raw_Interface'):
-                #InterfaceNo = int(RawInterface.find('InterfaceNo').text)
+            for WlanInterface in Station.findall('WlanInterface'):
+                #InterfaceNo = int(WlanInterface.find('InterfaceNo').text)
                 InterfaceNo = index
                 index = index + 1
-                IPAddress = RawInterface.find('IPAddress').text
-                RawIface = raw_iface(InterfaceNo, IPAddress)
-                for REntry in RawInterface.findall('REntry'):
+                IPAddress = WlanInterface.find('IPAddress').text
+                WlanIface = wlan_iface(InterfaceNo, IPAddress)
+                for REntry in WlanInterface.findall('REntry'):
                     Net = REntry.find('Net').text
                     NetMask = REntry.find('NetMask').text
                     NextHop = REntry.find('NextHop').text
                     route = rentry(Net, NetMask, NextHop)
-                    RawIface.AddRoute(route)
+                    WlanIface.AddRoute(route)
 
-                nYun.AddRawIface(RawIface)
+                nStation.AddWlanIface(WlanIface)
 
-            self.AddYun(nYun)
+            self.AddStation(nStation)
 
-    def AddYun(self, Yun):
-        self.Yuns.append(Yun)
+    def AddStation(self, Station):
+        self.Stations.append(Station)
 
     def print_me(self):
 
-        for Yun in self.Yuns:
-            print "Yun%d" %Yun.ID
-            for TunIface in Yun.TunIfaces:
-                print "tun%d Dest=Yun%d vIP=%s vHw=%s" %(TunIface.num, TunIface.DestID, TunIface.vIP, TunIface.vHW)
+        for Station in self.Stations:
+            print "Station%d" %Station.ID
+            for TunIface in Station.TunIfaces:
+                print "tun%d Dest=Station%d vIP=%s vHw=%s" %(TunIface.num, TunIface.DestID, TunIface.vIP, TunIface.vHW)
                 for route in TunIface.routes:
                     print "route net=%s netmask=%s gw=%s" %(route.net, route.netmask, route.nexthop)
 
-            for RawIface in Yun.RawIfaces:
-                print "raw%d vIP=%s" %(RawIface.num, RawIface.vIP)
-                for route in RawIface.routes:
+            for WlanIface in Station.WlanIfaces:
+                print "wlan%d vIP=%s" %(WlanIface.num, WlanIface.vIP)
+                for route in WlanIface.routes:
                     print "route net=%s netmask=%s gw=%s" %(route.net, route.netmask, route.nexthop)

@@ -11,14 +11,14 @@ class ifaces:
 	def __init__(self, top_num, IP):
 		self.top_num = top_num
 		self.tun = []
-		self.raw = []
-		self.yunIP = IP
+		self.wlan = []
+		self.StationIP = IP
 
 	def AddTunIface(self, tuniface):
 		self.tun.append(tuniface)
 
-	def AddRawIface(self, rawiface):
-		self.raw.append(rawiface)
+	def AddWlanIface(self, wlaniface):
+		self.wlan.append(wlaniface)
 
 class tun_iface:
 	def __init__(self, num, dst_ip, dst_iface, vIP, vHW, routes):
@@ -32,7 +32,7 @@ class tun_iface:
 	def AddRoute(self, routes):
 		self.routes.append(routes)
 
-class raw_iface:
+class wlan_iface:
 	def __init__(self, num, vIP):
 		self.num = num
 		self.vIP = vIP
@@ -49,7 +49,7 @@ class rentry:
 		self.nexthop = nexthop
 
 def run_yrouter(interfaces, ID):
-	YunIP = interfaces.yunIP
+	StationIP = interfaces.StationIP
 
 	# 1) Set up the yrouter's configuration file
 	configFileName = "script_t%d_y%d.conf" %(interfaces.top_num, ID)
@@ -72,8 +72,8 @@ def run_yrouter(interfaces, ID):
 				outLine += " -gw %s" %route.nexthop
 			outLine += "\n"
 
-	for iface in interfaces.raw:
-		outLine += "ifconfig add raw%d -addr %s\n" % (iface.num, iface.vIP)
+	for iface in interfaces.wlan:
+		outLine += "ifconfig add wlan%d -addr %s\n" % (iface.num, iface.vIP)
 
 		for route in iface.routes:
 			outLine += "route add -dev raw%d -net %s -netmask %s" \
@@ -85,26 +85,26 @@ def run_yrouter(interfaces, ID):
 	configfd.write(outLine)
 	configfd.close()
 
-	# 2) Copy configuration file to remote yun
+	# 2) Copy configuration file to remote Station
 	RemoteFile = remote_dir + configFileName
-	remote_yun = "root@%s" % YunIP
+	remote_Station = "root@%s" % StationIP
 	remote_copy = "%s scp %s %s:%s" \
-	%(sshpass, configFile, remote_yun, remote_dir)
+	%(sshpass, configFile, remote_Station, remote_dir)
 	os.system(remote_copy)
 
 	# 3) Run yrouter using ssh
 	yrouter = "screen -d -m -L -S newrouter%s grouter --interactive=1 \
 	--config=%s test%s\n" %(interfaces.top_num, RemoteFile, interfaces.top_num)
 	print yrouter
-	remote_run = "%s ssh %s \"source /root/.profile; %s\""%(sshpass, remote_yun, yrouter)
+	remote_run = "%s ssh %s \"source /root/.profile; %s\""%(sshpass, remote_Station, yrouter)
 	os.system(remote_run)
 
-def kill_yrouter(top_num, YunIP):
-	kill_command = "%s ssh root@%s \"/root/bin/kill_yrouter %d\"" %(sshpass, YunIP, top_num)
+def kill_yrouter(top_num, StationIP):
+	kill_command = "%s ssh root@%s \"/root/bin/kill_yrouter %d\"" %(sshpass, StationIP, top_num)
 	print kill_command
 	os.system(kill_command)
 
-def delete_raw_iface(top_num, YunIP):
-	del_command = "%s ssh root@%s \"/root/bin/del_iface t%d\"" %(sshpass, YunIP, top_num)
+def delete_wlan_iface(top_num, StationIP):
+	del_command = "%s ssh root@%s \"/root/bin/del_iface t%d\"" %(sshpass, StationIP, top_num)
 	print del_command
 	os.system(del_command)

@@ -5,6 +5,7 @@ import xmlrpclib
 client_ip1 = "79.79.79.79"
 client_ip2 = "192.168.54.14"
 
+str = open ("latency.xml").read()
 XMLstring1 = open("topinterferenc1.xml").read()
 XMLstring2 = open("topinterferenc2.xml").read()
 
@@ -25,5 +26,5 @@ client = wgini_client("192.168.54.14", "8000")
 
 
 #status = client.Create(XMLstring, client_ip)
-
+status = client.Create(str, client_ip2)
 #print status
