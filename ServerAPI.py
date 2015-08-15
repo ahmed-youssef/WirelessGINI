@@ -140,8 +140,3 @@ class WGINI_Server:
 			run_yrouter(interfaces, Station.ID)
 
 		return "Create: Topology %d deployed" %TopID
-
-
-
-wgini_server = WGINI_Server("192.168.54.14", 8000)
-wgini_server.StartServer()

@@ -1,0 +1,18 @@
+To Start WGINI server:
+  From ServerAPI import WGINI_Server
+  wgini_server = WGINI_Server(ServerIP, ServerPort)
+  wgini_server.StartServer()
+
+To Start WGINI client:
+  From ClientAPI import WGINI_Client
+  wgini_client = WGINI_Client(ServerIP, ServerPort)
+
+To use the Check API:
+  Stations = wgini_client.Check()
+
+To Create a Topology:
+  TSF = open(XML_File).read()
+  status = wgini_client.Create(TSF, ClientIP)
+
+To Delete a Topology:
+  status = wgini_client.Delete(ClientIP)

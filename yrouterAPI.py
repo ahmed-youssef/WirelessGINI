@@ -73,7 +73,7 @@ def run_yrouter(interfaces, ID):
 			outLine += "\n"
 
 	for iface in interfaces.wlan:
-		outLine += "ifconfig add wlan%d -addr %s\n" % (iface.num, iface.vIP)
+		outLine += "ifconfig add raw%d -addr %s\n" % (iface.num, iface.vIP)
 
 		for route in iface.routes:
 			outLine += "route add -dev raw%d -net %s -netmask %s" \
@@ -93,7 +93,7 @@ def run_yrouter(interfaces, ID):
 	os.system(remote_copy)
 
 	# 3) Run yrouter using ssh
-	yrouter = "screen -d -m -L -S newrouter%s grouter --interactive=1 \
+	yrouter = "screen -d -m -L -S newrouter%s yrouter --interactive=1 \
 	--config=%s test%s\n" %(interfaces.top_num, RemoteFile, interfaces.top_num)
 	print yrouter
 	remote_run = "%s ssh %s \"source /root/.profile; %s\""%(sshpass, remote_Station, yrouter)
