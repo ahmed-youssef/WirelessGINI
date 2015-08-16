@@ -6,6 +6,8 @@ The platform design and implementation was performed as part of my MEng (Thesis)
 
 This repository contains the python code of the WGINI server and client.
 
+![Overview](/Images/WGINIOverview.jpg)
+
 # Installation
 
 No installation or external packages are necessary. The only requirements is python 2.7.3. The system is known to run on Ubuntu 12.04. No other operating systems have been tested.
@@ -46,13 +48,19 @@ Documentation for 1) the TSF format using the Document Type Definition (DTD) not
   - *Station.CurrWlan*: The current number of wlan interfaces deployed on the station.
   - *Station.MaxWlan*: The maximum number of wlan interfaces that this station can support
   - *Station.IsPortal*: A boolean that specifies whether or not this station is the mesh portal.
-- Status = Server.Delete(UserIP): Deletes the user’s VN from the wireless mesh platform.
-  - *UserIP*: The IP address of the user who wishes to delete his/her VN.
-  - *Status*: A status code that determines whether or not the operation succeeded.
+
 - Status = Server.Create(UserIP, TSFstring): Deploys the user’s VN as specified by the input TSF.
   - *UserIP*: The IP address of the user who wishes to deploy the VN.
   - *TSFstring*: The TSF file input as a regular string.
   - *Status*: A status code that determines whether or not the operation succeeded.
+
+![CreateAPI](/Images/CreateAPI.jpg)
+
+- Status = Server.Delete(UserIP): Deletes the user’s VN from the wireless mesh platform.
+  - *UserIP*: The IP address of the user who wishes to delete his/her VN.
+  - *Status*: A status code that determines whether or not the operation succeeded.
+
+![DeleteAPI](/Images/DeleteAPI.jpg)
 
 # Basic Setup
 
