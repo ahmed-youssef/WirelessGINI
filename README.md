@@ -49,14 +49,14 @@ Documentation for 1) the TSF format using the Document Type Definition (DTD) not
 - Status = Server.Delete(UserIP): Deletes the user’s VN from the wireless mesh platform.
   - *UserIP*: The IP address of the user who wishes to delete his/her VN.
   - *Status*: A status code that determines whether or not the operation succeeded.
--Status = Server.Create(UserIP, TSFstring): Deploys the user’s VN as specified by the input TSF.
+- Status = Server.Create(UserIP, TSFstring): Deploys the user’s VN as specified by the input TSF.
   - *UserIP*: The IP address of the user who wishes to deploy the VN.
   - *TSFstring*: The TSF file input as a regular string.
   - *Status*: A status code that determines whether or not the operation succeeded.
 
 # Basic Setup
 
-![Image of Physical Setup](https://db.tt/hYxu2cqh)
+![Image of Physical Setup](/home/anrl/Dropbox/McGill/GINI/Thesis/Thesis Example/PhysicalSetup.pdf)
 
 Make sure that the wireless mesh network is reachable by the WGINI server. Use the following command on the WGINI server to add a route entry for the mesh:
 
@@ -68,22 +68,17 @@ We provide the usage through a simple example. In this example:
 
 - The WGINI server's IP address on the LAN is 192.168.55.36
 - The WGINI server is listening on TCP port 60000.
-- The user's IP address on the LAN that connects the user to the WGINI server is 192.168.55.197
+- The user machine's IP address on the LAN is 192.168.55.197
 
 
 ## Running the WGINI Server
 
-Run the following script On the WGINI server:
+Run the following script on the WGINI server:
 
 ```
-
 From ServerAPI import WGINI_Server
 
-ServerIP = "192.168.55.36"
-# TCP port number to listen on
-ServerPort = 60000
-# Run Server
-wgini_server = WGINI_Server(ServerIP, ServerPort)
+wgini_server = WGINI_Server("192.168.55.36", 60000)
 wgini_server.StartServer()
 
 ```
@@ -95,18 +90,16 @@ That's it! The WGINI server is now listening on TCP port 60000 for incoming requ
 Run the following script on the user's machine:
 
 ```
-
 From ClientAPI import WGINI_Client
 
 wgini_client = WGINI_Client("192.168.55.36", 60000)
-
 ```
 
 This instantiates a WINI client object that can invoke the WGINI server APIs using RPC. We see how this is done below.
 
 ### Invoking the Server APIs
 
-After running the WGINI client on the user machine by instantiating the wgini_client object, we can now invoke the Server API using XML-RPC library provided by python.
+After running the WGINI client on the user machine by instantiating the wgini_client object, we can now invoke the Server APIs.
 
 #### Check API
 
@@ -123,12 +116,12 @@ An object array, *Stations* is returned. The object contains the Station's ID, t
 
 #### Create API
 
-The user creates an XML file "MyTopology.xml" that captures the user's requested topology (see the example folder for an example).
+The user creates an XML file "MyTopology.xml" that captures the user's requested topology (see the Example folder for an example of a TSF).
 
 ```
 # Create Topology using the Topology Specification File
 TSF = open("MyTopology.xml").read()
-status = wgini_client.Create(TSF, ClientIP)
+status = wgini_client.Create(TSF, "192.168.55.197")
 ```
 *Status* is a string that indicates whether or not the operation was successful. If the operation is not successful, an explanation is provided.
 
@@ -137,7 +130,7 @@ status = wgini_client.Create(TSF, ClientIP)
 To delete a topology that the user deployed, the user invokes the Delete() function as shown below:
 
 ```
-status = wgini_client.Delete(ClientIP)
+status = wgini_client.Delete("192.168.55.197")
 
 ```
 
