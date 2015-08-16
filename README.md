@@ -135,7 +135,7 @@ status = wgini_client.Create(TSF, "192.168.55.197")
 ```
 *Status* is a string that indicates whether or not the operation was successful. If the operation is not successful, an explanation is provided.
 
-# Delete Topology
+#### Delete API
 
 To delete a topology that the user deployed, the user invokes the Delete() function as shown below:
 
