@@ -56,7 +56,7 @@ Documentation for 1) the TSF format using the Document Type Definition (DTD) not
 
 # Basic Setup
 
-![Image of Physical Setup](/home/anrl/Dropbox/McGill/GINI/Thesis/Thesis Example/PhysicalSetup.pdf)
+![Image of Physical Setup](/Images/PhysicalSetup.pdf)
 
 Make sure that the wireless mesh network is reachable by the WGINI server. Use the following command on the WGINI server to add a route entry for the mesh:
 
