@@ -18,6 +18,8 @@ Documentation for 1) the TSF format using the Document Type Definition (DTD) not
 
 ## The Topology Specification File Document Type Definition
 
+Below is the DTD of the TSF. See Example/MyTopology.xml for a TSF example.
+
 ```
 
 <!DOCTYPE VN [
@@ -72,7 +74,7 @@ Make sure that the wireless mesh network is reachable by the WGINI server. Use t
 
 # Usage
 
-We provide the usage through a simple example. In this example:
+We illustrate the usage of the WGINI system through a simple example. In this example:
 
 - The WGINI server's IP address on the LAN is 192.168.55.36
 - The WGINI server is listening on TCP port 60000.
@@ -103,7 +105,7 @@ From ClientAPI import WGINI_Client
 wgini_client = WGINI_Client("192.168.55.36", 60000)
 ```
 
-This instantiates a WINI client object that can invoke the WGINI server APIs using RPC. We see how this is done below.
+This instantiates a WGINI client object that can invoke the WGINI server APIs using RPC. We see how this is done below.
 
 ### Invoking the Server APIs
 
