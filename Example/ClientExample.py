@@ -4,7 +4,7 @@ ServerIP = "192.168.55.36"
 ServerPort = 60000
 ClientIP = "192.168.55.197"
 
-wgini_client = WGINI_Client(ServerIP, ServerPort)
+wgini_client = WGINI_Client(ServerIP, ServerPort, ClientIP)
 
 # Check the number of stations and the available wlan interfaces
 Stations = wgini_client.Check()
@@ -13,4 +13,7 @@ for Station in Stations:
 
 # Create Topology using the Topology Specification File
 TSF = open("MyTopology.xml").read()
-status = wgini_client.Create(TSF, ClientIP)
+status = wgini_client.Create(TSF)
+
+# To Delete the VN
+# status = wgini_client.Delete()

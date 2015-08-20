@@ -51,15 +51,13 @@ Below is the DTD of the TSF. See Example/MyTopology.xml for a TSF example.
   - *Station.MaxWlan*: The maximum number of wlan interfaces that this station can support
   - *Station.IsPortal*: A boolean that specifies whether or not this station is the mesh portal.
 
-- Status = Server.Create(UserIP, TSFstring): Deploys the user’s VN as specified by the input TSF.
-  - *UserIP*: The IP address of the user who wishes to deploy the VN.
+- Status = Server.Create(TSFstring): Deploys the user’s VN as specified by the input TSF.
   - *TSFstring*: The TSF file input as a regular string.
   - *Status*: A status code that determines whether or not the operation succeeded.
 
 ![CreateAPI](/Images/CreateAPI.jpg)
 
-- Status = Server.Delete(UserIP): Deletes the user’s VN from the wireless mesh platform.
-  - *UserIP*: The IP address of the user who wishes to delete his/her VN.
+- Status = Server.Delete(): Deletes the user’s VN from the wireless mesh platform.
   - *Status*: A status code that determines whether or not the operation succeeded.
 
 ![DeleteAPI](/Images/DeleteAPI.jpg)
@@ -102,7 +100,7 @@ Run the following script on the user's machine:
 ```
 From ClientAPI import WGINI_Client
 
-wgini_client = WGINI_Client("192.168.55.36", 60000)
+wgini_client = WGINI_Client("192.168.55.36", 60000, "192.168.55.197")
 ```
 
 This instantiates a WGINI client object that can invoke the WGINI server APIs using RPC. We see how this is done below.
@@ -131,7 +129,7 @@ The user creates an XML file "MyTopology.xml" that captures the user's requested
 ```
 # Create Topology using the Topology Specification File
 TSF = open("MyTopology.xml").read()
-status = wgini_client.Create(TSF, "192.168.55.197")
+status = wgini_client.Create(TSF)
 ```
 *Status* is a string that indicates whether or not the operation was successful. If the operation is not successful, an explanation is provided.
 
@@ -140,8 +138,7 @@ status = wgini_client.Create(TSF, "192.168.55.197")
 To delete a topology that the user deployed, the user invokes the Delete() function as shown below:
 
 ```
-status = wgini_client.Delete("192.168.55.197")
-
+status = wgini_client.Delete()
 ```
 
 *Status* is a string that indicates whether or not the operation was successful. If the operation is not successful, an explanation is provided.
