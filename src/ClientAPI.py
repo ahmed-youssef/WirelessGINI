@@ -2,7 +2,7 @@ import xmlrpclib
 
 class WGINI_Client:
 	def __init__(self, ServerIP, ServerPort, ClientIP):
-		self.conn = xmlrpclib.ServerProxy("http://" + ip + ":" + str(port))
+		self.conn = xmlrpclib.ServerProxy("http://" + ServerIP + ":" + str(ServerPort))
 		self.ClientIP = ClientIP
 
 	def Check(self):
