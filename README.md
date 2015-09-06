@@ -2,7 +2,7 @@
 
 Wireless GINI is an educational platform for hosting virtual networks. Wireless GINI allows each virtual network to define its own topology and network configuration, while amortizing costs by sharing the physical infrastructure. The platform also creates mechanisms to integrate commodity wireless devices into a deployed virtual network. Wireless GINI provides a user-friendly interface that makes the physical setup process completely transparent to the user. A centralized server is used to provide this transparency, handle user requests, and automatically provision the shared physical infrastructure.
 
-The platform design and implementation was performed as part of my MEng (Thesis) degree. Please refer to [my thesis](https://dl.dropboxusercontent.com/u/14656377/260543987_Youssef_Ahmed_Electrical%20%26%20Computer%20Eng%20%28ECE%29_thesis.pdf) for a more detailed overview of the system.
+The platform design and implementation was performed as part of my MEng (Thesis) degree. Please refer to [my thesis](https://dl.dropboxusercontent.com/u/14656377/AhmedThesis.pdf) for a more detailed overview of the system.
 
 This repository contains the python code of the WGINI server and client.
 
